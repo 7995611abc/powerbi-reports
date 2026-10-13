@@ -1,0 +1,11 @@
+-- Import sales_data.csv as table Sales; set order_date to Date
+Total Revenue = SUM(Sales[sales])
+Total Profit = SUM(Sales[profit])
+Orders = DISTINCTCOUNT(Sales[order_id])
+Units Sold = SUM(Sales[quantity])
+Profit Margin % = DIVIDE([Total Profit], [Total Revenue])
+Average Order Value = DIVIDE([Total Revenue], [Orders])
+Revenue PY = CALCULATE([Total Revenue], SAMEPERIODLASTYEAR('Date'[Date]))
+Revenue YoY % = DIVIDE([Total Revenue] - [Revenue PY], [Revenue PY])
+-- Date = CALENDAR(MIN(Sales[order_date]), MAX(Sales[order_date]))
+-- Relate Date[Date] (one) to Sales[order_date] (many), mark Date as date table.

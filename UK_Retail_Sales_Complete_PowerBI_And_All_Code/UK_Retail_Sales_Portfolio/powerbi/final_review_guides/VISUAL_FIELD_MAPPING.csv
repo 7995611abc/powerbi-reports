@@ -1,0 +1,10 @@
+Page,Visual,Axis or Rows,Measure or Values,Tooltip or Filter
+Executive,KPI cards,,Total Sales; Total Profit; Total Orders; Profit Margin %; Average Order Value; Sales YoY %,Year context for YoY
+Executive,Monthly line,Calendar[Year Month],Total Sales,Sales YoY %
+Executive,Category bars,Sales[category],Total Sales,Profit Margin %
+Executive,Regional clustered,Sales[region],Total Sales; Total Profit,Profit Margin %
+Executive,Top 10 product bars,Sales[product],Total Sales,Top N filter by Total Sales
+Profitability,Category margin,Sales[category],Profit Margin %,Total Profit
+Profitability,Product scatter,Total Sales; Profit Margin %,Total Orders,Sales[product] detail
+Profitability,Region margin,Sales[region],Profit Margin %,Total Sales
+Detail,Matrix,Category > Product; Region,Total Sales; Total Profit; Profit Margin %,Date and segment filters

@@ -1,0 +1,9 @@
+Connect to sales_data.csv and set order_date to Date.
+Revenue: SUM([sales])
+Profit: SUM([profit])
+Profit Margin: SUM([profit]) / SUM([sales])
+Orders: COUNTD([order_id])
+Average Order Value: SUM([sales]) / COUNTD([order_id])
+Month: DATETRUNC('month', [order_date])
+Suggested worksheets: Monthly Revenue (line), Revenue by Region (bars), Revenue and Margin by Category, Top Products, Segment Mix.
+Add Region, Segment, and Date filters to a dashboard; use filters across all relevant sheets.

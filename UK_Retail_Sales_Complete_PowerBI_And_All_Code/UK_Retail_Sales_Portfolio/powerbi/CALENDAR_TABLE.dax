@@ -1,0 +1,13 @@
+-- Modeling > New table (create ONE table):
+Calendar = CALENDAR(MIN(Sales[order_date]), MAX(Sales[order_date]))
+
+-- Modeling > New column (create each in Calendar individually):
+Year = YEAR('Calendar'[Date])
+Month Number = MONTH('Calendar'[Date])
+Month Name = FORMAT('Calendar'[Date], "MMM")
+Year Month = FORMAT('Calendar'[Date], "yyyy-MM")
+Year Month Sort = YEAR('Calendar'[Date]) * 100 + MONTH('Calendar'[Date])
+Quarter = "Q" & FORMAT('Calendar'[Date], "Q")
+
+-- In Column tools, sort Month Name by Month Number and Year Month by Year Month Sort.
+-- Mark Calendar as the date table using Calendar[Date].

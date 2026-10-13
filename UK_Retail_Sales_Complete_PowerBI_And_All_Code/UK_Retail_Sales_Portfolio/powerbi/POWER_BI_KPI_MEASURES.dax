@@ -1,0 +1,51 @@
+-- POWER BI / SALES MEASURES
+-- IMPORT CSV as Sales; set Sales[order_date] to Date.
+-- Create a Calendar table using the separate CALENDAR_TABLE.dax file, mark it as date table,
+-- and link Calendar[Date] (one) -> Sales[order_date] (many), single direction.
+-- Enter each measure ONE AT A TIME through Modeling > New measure.
+
+Total Sales = SUM(Sales[sales])
+
+Total Profit = SUM(Sales[profit])
+
+Total Cost = SUM(Sales[cost])
+
+Total Orders = DISTINCTCOUNT(Sales[order_id])
+
+Units Sold = SUM(Sales[quantity])
+
+Unique Customers = DISTINCTCOUNT(Sales[customer_id])
+
+Profit Margin % = DIVIDE([Total Profit], [Total Sales])
+
+Average Order Value = DIVIDE([Total Sales], [Total Orders])
+
+Average Profit per Order = DIVIDE([Total Profit], [Total Orders])
+
+Sales PY = CALCULATE([Total Sales], SAMEPERIODLASTYEAR('Calendar'[Date]))
+
+Profit PY = CALCULATE([Total Profit], SAMEPERIODLASTYEAR('Calendar'[Date]))
+
+Sales YoY % = IF(NOT ISBLANK([Sales PY]), DIVIDE([Total Sales] - [Sales PY], [Sales PY]))
+
+Profit YoY % = IF(NOT ISBLANK([Profit PY]), DIVIDE([Total Profit] - [Profit PY], [Profit PY]))
+
+Sales Previous Month = CALCULATE([Total Sales], DATEADD('Calendar'[Date], -1, MONTH))
+
+Sales MoM % = IF(NOT ISBLANK([Sales Previous Month]), DIVIDE([Total Sales] - [Sales Previous Month], [Sales Previous Month]))
+
+Category Sales Share % = DIVIDE([Total Sales], CALCULATE([Total Sales], REMOVEFILTERS(Sales[category])))
+
+Region Sales Share % = DIVIDE([Total Sales], CALCULATE([Total Sales], REMOVEFILTERS(Sales[region])))
+
+Product Rank by Sales = RANKX(ALLSELECTED(Sales[product]), [Total Sales], , DESC, DENSE)
+
+Product Profit Margin % = [Profit Margin %]
+
+Cumulative Sales = CALCULATE([Total Sales], FILTER(ALLSELECTED('Calendar'[Date]), 'Calendar'[Date] <= MAX('Calendar'[Date])))
+
+Selected Period Label = FORMAT(MIN('Calendar'[Date]), "dd MMM yyyy") & " – " & FORMAT(MAX('Calendar'[Date]), "dd MMM yyyy")
+
+-- NOTE: A category/region sales share removes ONLY the named field's filter, retaining
+-- other slicers (including year); cross-highlighting may differ from filtering.
+-- Profit is a supplied source field: do not call it net profit without other expenses.
